@@ -45,8 +45,8 @@ class Weather extends Equatable {
       minTemp: consolidatedWeather['min_temp'],
       maxTemp: consolidatedWeather['max_temp'],
       theTemp: consolidatedWeather['the_temp'],
-      title: consolidatedWeather['title'],
-      woeid: consolidatedWeather['woeid'],
+      title: consolidatedWeather['title'] ?? "",
+      woeid: consolidatedWeather['woeid'] ?? -1,
       lastUpdated: DateTime.now(),
     );
   }
@@ -69,5 +69,29 @@ class Weather extends Equatable {
   @override
   String toString() {
     return 'Weather(weatherStateName: $weatherStateName, weatherStateAbbr: $weatherStateAbbr, created: $created, minTemp: $minTemp, maxTemp: $maxTemp, theTemp: $theTemp, title: $title, woeid: $woeid, lastUpdated: $lastUpdated)';
+  }
+
+  Weather copyWith({
+    String? weatherStateName,
+    String? weatherStateAbbr,
+    String? created,
+    double? minTemp,
+    double? maxTemp,
+    double? theTemp,
+    String? title,
+    int? woeid,
+    DateTime? lastUpdated,
+  }) {
+    return Weather(
+      weatherStateName: weatherStateName ?? this.weatherStateName,
+      weatherStateAbbr: weatherStateAbbr ?? this.weatherStateAbbr,
+      created: created ?? this.created,
+      minTemp: minTemp ?? this.minTemp,
+      maxTemp: maxTemp ?? this.maxTemp,
+      theTemp: theTemp ?? this.theTemp,
+      title: title ?? this.title,
+      woeid: woeid ?? this.woeid,
+      lastUpdated: lastUpdated ?? this.lastUpdated,
+    );
   }
 }
