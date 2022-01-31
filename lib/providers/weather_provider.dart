@@ -68,7 +68,9 @@ class WeatherProvider with ChangeNotifier {
       print('_state: $_state');
       notifyListeners();
     } on CustomError catch (e) {
+      print(e);
       _state = _state.copyWith(status: WeatherStatus.error, error: e);
+      notifyListeners();
     }
   }
 }
