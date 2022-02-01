@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:weather_provider/constants/constants.dart';
 import 'package:weather_provider/providers/weather_provider.dart';
 
@@ -31,16 +31,14 @@ class ThemeState extends Equatable {
   }
 }
 
-class ThemeProvider with ChangeNotifier {
-  ThemeState _state = ThemeState.initial();
-  ThemeState get state => _state;
+class ThemeProvider {
+  final WeatherProvider weatherProvider;
+  ThemeProvider({
+    required this.weatherProvider,
+  });
 
-  void update(WeatherProvider wp) {
-    if (wp.state.weather.theTemp < kWarmOrNot) {
-      _state = _state.copyWith(appTheme: AppTheme.dark);
-    } else {
-      _state = _state.copyWith(appTheme: AppTheme.light);
-    }
-    notifyListeners();
-  }
+  ThemeState get state => ThemeState(
+      appTheme: weatherProvider.state.weather.theTemp < kWarmOrNot
+          ? AppTheme.dark
+          : AppTheme.light);
 }
