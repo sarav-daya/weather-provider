@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:state_notifier/state_notifier.dart';
 
 enum TempUnit {
   celsius,
@@ -30,17 +30,15 @@ class TempSettingsState extends Equatable {
   }
 }
 
-class TempSettingsProvider with ChangeNotifier {
-  TempSettingsState _state = TempSettingsState.initial();
-  TempSettingsState get state => _state;
+class TempSettingsProvider extends StateNotifier<TempSettingsState> {
+  TempSettingsProvider() : super(TempSettingsState.initial());
 
   void toggleTempUnit() {
-    _state = _state.copyWith(
-      tempUnit: _state.tempUnit == TempUnit.celsius
+    state = state.copyWith(
+      tempUnit: state.tempUnit == TempUnit.celsius
           ? TempUnit.fahrenheit
           : TempUnit.celsius,
     );
-    print('state : $_state');
-    notifyListeners();
+    print('state : $state');
   }
 }

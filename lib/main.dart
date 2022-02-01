@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_provider/pages/home_page.dart';
 import 'package:weather_provider/providers/temp_settings_provider.dart';
@@ -31,41 +31,22 @@ class MyApp extends StatelessWidget {
             return WeatherRepository(weatherApiServices: weatherApiServices);
           },
         ),
-        ChangeNotifierProvider(
-          create: (context) => WeatherProvider(
-            weatherRepository: context.read<WeatherRepository>(),
-          ),
+        StateNotifierProvider<WeatherProvider, WeatherState>(
+          create: (context) => WeatherProvider(),
         ),
-        ChangeNotifierProvider<TempSettingsProvider>(
+        StateNotifierProvider<TempSettingsProvider, TempSettingsState>(
           create: (context) => TempSettingsProvider(),
         ),
-        // ChangeNotifierProxyProvider<WeatherProvider, ThemeProvider>(
-        //   create: (context) => ThemeProvider(),
-        //   update: (
-        //     BuildContext context,
-        //     WeatherProvider wp,
-        //     ThemeProvider? tp,
-        //   ) =>
-        //       tp!..update(wp),
-        // ),
-        ProxyProvider<WeatherProvider, ThemeProvider>(
-          update: (BuildContext context, WeatherProvider weatherProvider,
-                  ThemeProvider? _) =>
-              ThemeProvider(weatherProvider: weatherProvider),
+        StateNotifierProvider<ThemeProvider, ThemeState>(
+          create: (context) => ThemeProvider(),
         ),
       ],
       builder: (context, _) => MaterialApp(
         title: 'Weather App',
         debugShowCheckedModeBanner: false,
-        // theme: ThemeData(
-        //   primarySwatch: Colors.blue,
-        //   textTheme: GoogleFonts.openSansTextTheme(Theme.of(context).textTheme),
-        // ),
-        theme: context.watch<ThemeProvider>().state.appTheme == AppTheme.light
+        theme: context.watch<ThemeState>().appTheme == AppTheme.light
             ? ThemeData.light()
-                .copyWith(textTheme: GoogleFonts.openSansTextTheme())
-            : ThemeData.dark()
-                .copyWith(textTheme: GoogleFonts.openSansTextTheme()),
+            : ThemeData.dark(),
         home: const HomePage(),
       ),
     );
