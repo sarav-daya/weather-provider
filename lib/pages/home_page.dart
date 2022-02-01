@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_provider/constants/constants.dart';
 import 'package:weather_provider/pages/search_page.dart';
+import 'package:weather_provider/pages/settings_page.dart';
+import 'package:weather_provider/providers/temp_settings_provider.dart';
 import 'package:weather_provider/providers/weather_provider.dart';
 import 'package:weather_provider/widgets/error_widget.dart';
 
@@ -32,6 +34,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   String showTemperature(double temperature) {
+    final tempUnit = context.watch<TempSettingsProvider>().state.tempUnit;
+
+    if (tempUnit == TempUnit.fahrenheit) {
+      return ((temperature * 9 / 5) + 32).toStringAsFixed(2) + ' ℉';
+    }
     return temperature.toStringAsFixed(2) + ' ℃';
   }
 
@@ -54,7 +61,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue.shade700,
         title: Text('Weather'),
+        centerTitle: true,
+        elevation: 0,
         actions: [
           IconButton(
             onPressed: () async {
@@ -72,7 +82,18 @@ class _HomePageState extends State<HomePage> {
               }
             },
             icon: Icon(Icons.search),
-          )
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingsPage(),
+                ),
+              );
+            },
+            icon: Icon(Icons.settings),
+          ),
         ],
       ),
       body: _showWeather(),

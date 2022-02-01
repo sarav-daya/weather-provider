@@ -30,6 +30,9 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Search'),
+        elevation: 0,
+        backgroundColor: Colors.blue.shade700,
+        centerTitle: true,
       ),
       body: Form(
         key: _formKey,
