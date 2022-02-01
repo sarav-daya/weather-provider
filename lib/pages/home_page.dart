@@ -61,10 +61,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue.shade700,
         title: Text('Weather'),
         centerTitle: true,
-        elevation: 0,
         actions: [
           IconButton(
             onPressed: () async {

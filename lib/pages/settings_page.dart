@@ -10,8 +10,6 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Settings'),
         centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.blue.shade700,
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
