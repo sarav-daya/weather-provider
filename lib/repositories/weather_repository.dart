@@ -13,7 +13,7 @@ class WeatherRepository {
     try {
       final int woeid = await weatherApiServices.getWoeid(city);
 
-      final Weather weather = await weatherApiServices.getWeather(woeid, city);
+      final Weather weather = await weatherApiServices.getWeather(woeid);
 
       return weather;
     } on WeatherException catch (e) {

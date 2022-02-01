@@ -45,8 +45,8 @@ class Weather extends Equatable {
       minTemp: consolidatedWeather['min_temp'],
       maxTemp: consolidatedWeather['max_temp'],
       theTemp: consolidatedWeather['the_temp'],
-      title: consolidatedWeather['title'] ?? "",
-      woeid: consolidatedWeather['woeid'] ?? -1,
+      title: json['title'] ?? "",
+      woeid: json['woeid'] ?? -1,
       lastUpdated: DateTime.now(),
     );
   }

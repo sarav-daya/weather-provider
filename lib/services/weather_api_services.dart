@@ -44,7 +44,7 @@ class WeatherApiServices {
     }
   }
 
-  Future<Weather> getWeather(int woeid, String city) async {
+  Future<Weather> getWeather(int woeid) async {
     final Uri uri = Uri(
       scheme: 'https',
       host: kHost,
@@ -61,7 +61,6 @@ class WeatherApiServices {
       final weatherJson = json.decode(response.body);
 
       Weather weather = Weather.fromJson(weatherJson);
-      weather = weather.copyWith(woeid: woeid, title: city);
 
       return weather;
     } catch (e) {
