@@ -11,7 +11,7 @@ class WeatherApiServices {
   WeatherApiServices({
     required this.httpClient,
   });
-
+//
   Future<int> getWoeid(String city) async {
     final Uri uri = Uri(
       scheme: 'https',
@@ -39,6 +39,33 @@ class WeatherApiServices {
       }
 
       return responseBody[0]['woeid'];
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<String> getCity(double lat, double long) async {
+    final Uri uri = Uri(
+      scheme: 'https',
+      host: kHost,
+      path: '/api/location/search/',
+      queryParameters: {'lattlong': '$lat,$long'},
+    );
+
+    try {
+      final http.Response response = await http.get(uri);
+
+      if (response.statusCode != 200) {
+        throw httpErrorHandler(response);
+      }
+
+      final responseBody = json.decode(response.body);
+
+      if (responseBody.isEmpty) {
+        throw WeatherException('Cannot get the woeid');
+      }
+
+      return responseBody[0]['title'];
     } catch (e) {
       rethrow;
     }
